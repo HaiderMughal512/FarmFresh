@@ -1,45 +1,51 @@
 import {StyleSheet} from 'react-native';
+import {height, width} from '../../utils/Dimensions';
 
 const styles = StyleSheet.create({
   container: {
-    height: 270,
-    width: 170,
+    height: height(33),
+    width: width(45),
     marginHorizontal: 10,
     backgroundColor: 'white',
     borderRadius: 20,
     elevation: 5,
+    marginBottom: height(1),
   },
   imageContainer: {
-    height: '50%',
-    width: '90%',
+    height: height(17),
+    width: width(40),
     backgroundColor: 'orange',
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',
     margin: 5,
+    // backgroundColor: 'red',
   },
   image: {
     height: '100%',
     width: '100%',
   },
   infoContainer: {
-    padding: 10,
+    // padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    // backgroundColor: 'red',
   },
   productName: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    // backgroundColor: 'green',
   },
   price: {
     fontSize: 16,
     color: '#888',
-    marginVertical: 5,
+    // marginVertical: 5,
+    // backgroundColor: 'yellow',
   },
   addButton: {
     marginTop: 10,
-    width: '70%',
+    width: width(30),
   },
   gradientButton: {
     paddingVertical: 10,

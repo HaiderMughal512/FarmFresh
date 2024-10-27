@@ -1,9 +1,10 @@
 import {StyleSheet} from 'react-native';
+import {height, width} from '../../utils/Dimensions';
 
 const styles = StyleSheet.create({
   container: {
-    height: 150, // Adjust height for a more spacious look
-    width: '90%',
+    height: height(17), // Adjust height for a more spacious look
+    width: width(90),
     alignSelf: 'center',
     borderRadius: 10, // Rounded corners for a modern look
     overflow: 'hidden', // Ensure content is clipped within the container

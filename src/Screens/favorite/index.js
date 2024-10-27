@@ -2,16 +2,17 @@ import {View, Text, Button, FlatList} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {Card} from '../../components';
+import styles from './styles';
 
-const Like = () => {
+const Favorite = () => {
   const favourites = useSelector(
     state => state.favouriteReducer?.favouriteList,
   );
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.parentView}>
       <FlatList
         data={favourites}
-        contentContainerStyle={{flex: 1, alignItems: 'center'}}
+        contentContainerStyle={styles.flatListStyle}
         numColumns={2}
         scrollEnabled={true}
         renderItem={({item}) => {
@@ -31,4 +32,4 @@ const Like = () => {
   );
 };
 
-export default Like;
+export default Favorite;

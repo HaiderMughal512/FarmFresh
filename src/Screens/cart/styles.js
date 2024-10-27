@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {height, width} from '../../utils/Dimensions';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,6 +72,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
     fontWeight: '600',
+  },
+  removeIconTouch: {
+    height: height(4),
+    width: width(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    marginRight: 10,
+    marginTop: 5,
+    // backgroundColor: 'green',
+  },
+  quantityView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconTouch: {
+    height: height(4),
+    width: width(8),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
   },
 });
 

@@ -1,4 +1,10 @@
-import {View, Text, ImageBackground, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -31,10 +37,11 @@ export default function Card({item}) {
     <View style={styles.container}>
       {/* Image Section */}
       <View style={styles.imageContainer}>
-        <ImageBackground
+        <Image
           source={item.imageSource}
           resizeMode="cover"
-          style={styles.image}></ImageBackground>
+          style={styles.image}
+        />
       </View>
 
       {/* Product Info Section */}
@@ -54,20 +61,6 @@ export default function Card({item}) {
         </TouchableOpacity>
       </View>
       <Favourites item={item} />
-      {/* <TouchableOpacity
-        style={{
-          height: 40,
-          width: 40,
-          borderRadius: 20,
-          backgroundColor: 'white',
-          position: 'absolute',
-          top: 10,
-          right: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Icon name="heart" size={20} />
-      </TouchableOpacity> */}
     </View>
   );
 }

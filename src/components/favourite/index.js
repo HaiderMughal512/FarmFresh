@@ -7,6 +7,7 @@ import {
   addToFavourite,
   removeFromFavourite,
 } from '../../Redux/favourite/favouriteAction';
+import styles from './styles';
 
 const Favourites = ({item}) => {
   const dispatch = useDispatch();
@@ -34,19 +35,7 @@ const Favourites = ({item}) => {
   }, [favourites, item]);
 
   return (
-    <TouchableOpacity
-      style={{
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-        backgroundColor: 'white',
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      onPress={handleFavourite}>
+    <TouchableOpacity style={styles.parentView} onPress={handleFavourite}>
       {isFavourite ? (
         <Icon2 name="heart" size={20} color="red" />
       ) : (
