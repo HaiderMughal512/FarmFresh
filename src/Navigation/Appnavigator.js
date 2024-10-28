@@ -1,11 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Login from '../Screens/Login';
-import Splash from '../Screens/Splash';
-import Signup from '../Screens/Signup';
 import Drawernavigator from './Drawernavigator'; // Import Drawernavigator
-import Changepassword from '../Screens/Customer/Changepassword';
-import {CartScreen} from '../Screens';
+import {
+  CartScreen,
+  ChangePasswordScreen,
+  LogInScreen,
+  SignUpScreen,
+  SplashScreen,
+} from '../Screens';
 
 const Stack = createNativeStackNavigator(); // Ensure 'Stack' is correctly defined
 
@@ -15,17 +17,17 @@ const Appnavigator = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Splash"
-          component={Splash}
+          component={SplashScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
           name="Login"
-          component={Login}
+          component={LogInScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
           name="Signup"
-          component={Signup}
+          component={SignUpScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -41,7 +43,7 @@ const Appnavigator = () => {
 
         <Stack.Screen
           name="Changepassword"
-          component={Changepassword}
+          component={ChangePasswordScreen}
           options={{headerTitle: 'Change Password'}}
         />
       </Stack.Navigator>
