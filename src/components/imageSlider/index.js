@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Image} from 'react-native';
-import Swiper from 'react-native-swiper'; // Ensure you import Swiper
+import Swiper from 'react-native-swiper';
 import {ImageNames} from '../../images';
 import styles from './styles';
 
@@ -25,7 +25,7 @@ const ImageSlider = () => {
           <Image
             source={ImageNames.ORANGE}
             style={styles.image}
-            resizeMode="cover" // Change to 'cover' for better fit
+            resizeMode="cover"
           />
         </View>
         <View style={styles.slide}>

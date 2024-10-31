@@ -1,10 +1,35 @@
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Custominput from '../common/Custominput';
+import {login} from '../api/User';
+import {errorMessage} from '../utils/Methods';
+import {useDispatch} from 'react-redux';
+import {addUser} from '../Redux/user/userAction';
 
 const Login = () => {
   const navigation = useNavigation();
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    console.log(email, password);
+    const res = await login(email, password, 'Farmer');
+    console.log(res);
+
+    if (res?.U_email === email) {
+      dispatch(addUser(res));
+
+      if (res?.U_role === 'Customer') {
+        navigation.navigate('Home');
+      } else {
+        navigation.navigate('FarmerHome');
+      }
+    } else {
+      errorMessage('Authenticatipon', 'User Not Exist');
+    }
+  };
   return (
     <View>
       <Image source={require('../images/logo.png')} style={styles.logo} />
@@ -12,11 +37,13 @@ const Login = () => {
       <Custominput
         placeholder="Enter your Email id"
         icon={require('../images/mail.png')}
+        onChangeText={setemail}
       />
       <Custominput
         placeholder="Enter your password"
         icon={require('../images/padlock.png')}
         type="password"
+        onChangeText={setpassword}
       />
       <TouchableOpacity
         style={{
@@ -28,12 +55,10 @@ const Login = () => {
           borderRadius: 20,
           alignItems: 'center',
         }}
-        onPress={() => {
-          navigation.navigate('Home');
-        }}>
+        onPress={handleLogin}>
         <Text style={{color: 'white', paddingTop: 13}}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           height: 50,
           width: '85%',
@@ -59,7 +84,7 @@ const Login = () => {
           alignItems: 'center',
         }}>
         <Text style={{color: 'white', paddingTop: 13}}>Farmer</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Text
         style={{
           marginTop: 20,

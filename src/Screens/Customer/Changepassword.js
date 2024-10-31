@@ -1,50 +1,71 @@
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import React, {useState} from 'react';
+import {updatePassword} from '../../api/User';
+import {useSelector} from 'react-redux';
 
 const Changepassword = () => {
+  const [currpassword, setcurrpassword] = useState();
+  const [newpassword, setnewpassword] = useState();
+  const [connewpassword, setconnewpassword] = useState();
+  const user = useSelector(state => state.userReducer?.user);
+
+  const handleUpdate = async () => {
+    let res = await updatePassword(user.U_email, currpassword, newpassword);
+    console.log('update password response', res);
+  };
   return (
     <View style={styles.container}>
       {/* Current Password Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/padlock.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/padlock.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder='Current Password' 
-          secureTextEntry={true} 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Current Password"
+          secureTextEntry={true}
+          style={styles.textInput}
+          onChangeText={setcurrpassword}
         />
       </View>
 
       {/* New Password Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/padlock.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/padlock.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder='New Password' 
-          secureTextEntry={true} 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="New Password"
+          secureTextEntry={true}
+          style={styles.textInput}
+          onChange={setnewpassword}
         />
       </View>
 
       {/* Confirm New Password Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/padlock.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/padlock.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder='Confirm New Password' 
-          secureTextEntry={true} 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Confirm New Password"
+          secureTextEntry={true}
+          style={styles.textInput}
+          onChange={setconnewpassword}
         />
       </View>
 
       {/* Update Password Button */}
-      <TouchableOpacity style={styles.updateButton}>
+      <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
         <Text style={styles.updateText}>Update Password</Text>
       </TouchableOpacity>
     </View>
@@ -55,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-   
+
     alignItems: 'center',
   },
   inputContainer: {

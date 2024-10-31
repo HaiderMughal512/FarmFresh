@@ -1,67 +1,103 @@
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {useSelector} from 'react-redux';
+import {updateUser} from '../../api/User';
 
-const MyAccounts = ({ navigation }) => {
+const MyAccounts = ({navigation}) => {
+  const user = useSelector(state => state.userReducer?.user);
+  const [name, setname] = useState(user?.U_name ? user?.U_name : '');
+  const [email, setemail] = useState(user?.U_email ? user?.U_email : '');
+  const [phone, setPhone] = useState(user?.U_number ? user?.U_number : '');
+  // const [password, setPass] = useState(user?.U_number ? user?.U_number : '');
+  const [address, setaddress] = useState(
+    user?.U_address ? user?.U_address : '',
+  );
+
+  const handleUpdate = async () => {
+    console.log('Number', phone);
+    let res = await updateUser(email, user?.U_password, phone, name, address);
+    console.log('Update Response', res);
+  };
+
+  // useEffect(() => {
+  //   console.log('User', user?.U_number);
+  //   setPhone(user?.U_number);
+  // }, []);
   return (
     <View style={styles.container}>
       {/* Name Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/person.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/person.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Name" 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Name"
+          style={styles.textInput}
+          value={name}
+          onChangeText={setname}
         />
       </View>
 
       {/* Phone Number Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/telephone.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/telephone.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Phone Number" 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Phone Number"
+          style={styles.textInput}
+          value={phone.toString()}
+          onChangeText={setPhone}
         />
       </View>
 
       {/* Email Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/email.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/email.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Email" 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Email"
+          style={styles.textInput}
+          value={email}
+          onChangeText={setemail}
+          editable={false}
         />
       </View>
 
       {/* Address Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/location.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/location.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Address" 
-          style={styles.textInput} 
+        <TextInput
+          placeholder="Address"
+          style={styles.textInput}
+          value={address}
+          onChangeText={setaddress}
         />
       </View>
 
       {/* Change Password Button */}
-      <TouchableOpacity 
-        style={styles.changePasswordButton} 
-        onPress={() => navigation.navigate('Changepassword')}
-      >
+      <TouchableOpacity
+        style={styles.changePasswordButton}
+        onPress={() => navigation.navigate('Changepassword')}>
         <Text style={styles.changePasswordText}>Change Password</Text>
       </TouchableOpacity>
 
       {/* Update Button */}
-      <TouchableOpacity style={styles.updateButton}>
+      <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
         <Text style={styles.updateText}>Update</Text>
       </TouchableOpacity>
     </View>
