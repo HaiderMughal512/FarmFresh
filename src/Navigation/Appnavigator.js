@@ -8,6 +8,7 @@ import Changepassword from '../Screens/Customer/Changepassword';
 import Cart from '../Screens/Customer/Cart';
 import FarmerHome from '../Screens/Farmer/home';
 import Description from '../components/description';
+import AddProduct from '../Screens/Farmer/addProduct';
 
 const Stack = createNativeStackNavigator(); // Ensure 'Stack' is correctly defined
 
@@ -48,6 +49,12 @@ const Appnavigator = () => {
         <Stack.Screen
           name="Cart"
           component={Cart}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="AddProduct"
+          component={AddProduct}
           options={{headerShown: false}}
         />
 

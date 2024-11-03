@@ -16,10 +16,12 @@ import {
   increaseQuantity,
   removeFromCart,
 } from '../../Redux/cart/cartAction';
+import {placeOrder} from '../../api/orders';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.cartReducer);
+  const user = useSelector(state => state.userReducer?.user);
   const increase = item => {
     // console.log('Increase', products);
 
@@ -126,6 +128,32 @@ const Cart = () => {
     );
   };
 
+  const handleCheckOut = async () => {
+    // console.log('User', products);
+
+    const orderList = products?.productlist.map(item => ({
+      P_id: item?.id,
+      Oi_quantity: item?.quantity,
+      Oi_price: item?.price,
+    }));
+
+    console.log('Order List', orderList);
+
+    let res = await placeOrder(
+      {
+        u_id: user?.U_id,
+        O_date: new Date(),
+        O_amount: Math.round(products?.subtotal, 4),
+        O_payment_status: 'Cash',
+        O_delivery_Address: user?.U_address,
+        O_status: 'Pending',
+      },
+      orderList,
+    );
+
+    console.log('Order Response', res);
+  };
+
   useEffect(() => {
     console.log('cart', products);
   }, []);
@@ -147,12 +175,7 @@ const Cart = () => {
         </Text>
       </View>
 
-      {/* <Button
-        title="Check"
-        onPress={() => {
-          console.log('Products List', products);
-        }}
-      /> */}
+      <Button title="Checkout" onPress={handleCheckOut} />
     </View>
   );
 };

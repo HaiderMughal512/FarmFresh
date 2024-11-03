@@ -14,7 +14,7 @@ export default function Card({item}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const handelAddCart = () => {
-    console.log('Price', item.price);
+    console.log('Price', item.P_price);
 
     dispatch(
       addToCart({
@@ -25,7 +25,7 @@ export default function Card({item}) {
         quantity: 1,
       }),
     );
-    navigation.navigate('Cart');
+    // navigation.navigate('Cart');
   };
 
   const hanledes = () => {

@@ -39,7 +39,7 @@ const Login = () => {
 
         navigation.navigate('Home');
       } else {
-        navigation.navigate('FarmerHome');
+        navigation.navigate('AddProduct');
       }
     } else {
       errorMessage('Authentication', 'User Not Exist');
