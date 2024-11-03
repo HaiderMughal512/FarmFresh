@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     height: '50%',
     width: '90%',
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',

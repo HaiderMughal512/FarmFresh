@@ -9,3 +9,19 @@ export const getProductList = async () => {
     console.log(error);
   }
 };
+
+export const addProducts = async formData => {
+  try {
+    let response = await fetch(ip + 'products/addProduct', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log('Add Product', error);
+  }
+};

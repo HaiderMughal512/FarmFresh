@@ -1,4 +1,10 @@
-import {View, Text, ImageBackground, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -9,6 +15,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import Favourites from '../favourite';
 import Description from '../description';
+import {imageIp} from '../../env';
 
 export default function Card({item}) {
   const navigation = useNavigation();
@@ -39,6 +46,11 @@ export default function Card({item}) {
           source={item.imageSource}
           resizeMode="cover"
           style={styles.image}></ImageBackground> */}
+
+        <Image
+          source={{uri: `${imageIp}${item?.images}`}}
+          style={styles.image}
+        />
       </View>
 
       {/* Product Info Section */}
