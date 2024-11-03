@@ -63,25 +63,27 @@ export const updateUser = async (username, password, phone, name, address) => {
 };
 export const updatePassword = async (username, oldpassword, newpassword) => {
   try {
+    console.log('Password Api', username, oldpassword, newpassword);
+
     let response = await fetch(
       ip +
-        `user/updatePassword?email=${username}&oldpassword=${oldpassword}&newpassword=${newpassword}`,
+        'user/updatePassword?email=' +
+        username +
+        '&oldpassword=' +
+        oldpassword +
+        '&newpassword=' +
+        newpassword,
       {
         method: 'POST',
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        // body: JSON.stringify({
-        //   email: username,
-        //   oldpassword: oldpassword,
-        //   newpassword: newpassword,
-        // }),
       },
     );
     let json = await response.json();
     return json;
   } catch (error) {
-    console.log(error);
+    console.log('Passoerd Api', error);
   }
 };

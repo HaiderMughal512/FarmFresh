@@ -8,6 +8,7 @@ import {addToCart} from '../../Redux/cart/cartAction';
 import Icon from 'react-native-vector-icons/Feather';
 import LinearGradient from 'react-native-linear-gradient';
 import Favourites from '../favourite';
+import Description from '../description';
 
 export default function Card({item}) {
   const navigation = useNavigation();
@@ -17,30 +18,33 @@ export default function Card({item}) {
 
     dispatch(
       addToCart({
-        productName: item.productName,
-        price: item.price,
-        imageSource: item.imageSource,
-        id: item.id,
+        productName: item?.P_name,
+        price: item?.P_price,
+        imageSource: '',
+        id: item?.P_id,
         quantity: 1,
       }),
     );
     navigation.navigate('Cart');
   };
 
+  const hanledes = () => {
+    navigation.navigate('Description', {product: item});
+  };
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={hanledes}>
       {/* Image Section */}
       <View style={styles.imageContainer}>
-        <ImageBackground
+        {/* <ImageBackground
           source={item.imageSource}
           resizeMode="cover"
-          style={styles.image}></ImageBackground>
+          style={styles.image}></ImageBackground> */}
       </View>
 
       {/* Product Info Section */}
       <View style={styles.infoContainer}>
-        <Text style={styles.productName}>{item.productName}</Text>
-        <Text style={styles.price}>$ {item.price}</Text>
+        <Text style={styles.productName}>{item?.P_name}</Text>
+        <Text style={styles.price}>RS. {item?.P_price}</Text>
 
         {/* Add Button */}
         <TouchableOpacity style={styles.addButton} onPress={handelAddCart}>
@@ -68,6 +72,6 @@ export default function Card({item}) {
         }}>
         <Icon name="heart" size={20} />
       </TouchableOpacity> */}
-    </View>
+    </TouchableOpacity>
   );
 }

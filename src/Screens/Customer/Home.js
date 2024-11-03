@@ -1,11 +1,49 @@
-import {View, Text, StyleSheet, Image, TextInput} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {ImageSliderNew, TopProducts} from '../../components';
 import {everyfakelist, fakeTopSellingData} from '../../utils/Data';
+import {getProductList} from '../../api/products';
 
 const Home = () => {
-  return (
+  const [loading, setLoading] = useState(true);
+  const [fruitList, setFruitList] = useState([]);
+  const [vegetableList, setVegetableList] = useState([]);
+
+  const getProducts = async () => {
+    let res = await getProductList();
+
+    // console.log('Product data', res);
+
+    const frtLst = res.filter(item => {
+      return item.P_category === 'Fruit';
+    });
+    setFruitList(frtLst);
+
+    const vgtLst = res.filter(item => {
+      return item.P_category === 'Vegetable';
+    });
+    setVegetableList(vgtLst);
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  return loading ? (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <ActivityIndicator size={'large'} color={'red'} />
+    </View>
+  ) : (
     <ScrollView
       style={{flex: 1, marginBottom: 20}}
       showsVerticalScrollIndicator={false}>
@@ -37,11 +75,11 @@ const Home = () => {
             fontWeight: 'bold',
             color: 'black',
           }}>
-          Top Selling Product
+          Fruits
         </Text>
         <View>
           {/* <Topselling/> */}
-          <TopProducts list={fakeTopSellingData} />
+          <TopProducts list={fruitList} key={1} />
         </View>
         <Text
           style={{
@@ -52,13 +90,13 @@ const Home = () => {
             color: 'black',
           }}>
           {' '}
-          Every Day Essentials{' '}
+          VegeTables{' '}
         </Text>
         {/* <View style={{margin:10}}>
       <Text style={{marginLeft:10,marginTop:10,fontSize:20,fontWeight:'bold',color:'black'}}>Everday Essentials</Text>
       </View> */}
         <View>
-          <TopProducts list={everyfakelist} />
+          <TopProducts list={vegetableList} key={2} />
         </View>
       </View>
     </ScrollView>

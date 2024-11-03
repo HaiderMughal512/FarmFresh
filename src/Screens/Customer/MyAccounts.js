@@ -9,6 +9,8 @@ import {
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {updateUser} from '../../api/User';
+import {errorMessage, successMessage} from '../../utils/Methods';
+import {showMessage} from 'react-native-flash-message';
 
 const MyAccounts = ({navigation}) => {
   const user = useSelector(state => state.userReducer?.user);
@@ -23,6 +25,7 @@ const MyAccounts = ({navigation}) => {
   const handleUpdate = async () => {
     console.log('Number', phone);
     let res = await updateUser(email, user?.U_password, phone, name, address);
+    successMessage('User profile', 'Update Successfully');
     console.log('Update Response', res);
   };
 
@@ -136,6 +139,7 @@ const styles = StyleSheet.create({
     width: '90%',
     justifyContent: 'center',
     marginTop: 20,
+    elevation: 1,
   },
   changePasswordText: {
     fontSize: 18,

@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     elevation: 5,
+    marginBottom: 5,
   },
   imageContainer: {
     height: '50%',

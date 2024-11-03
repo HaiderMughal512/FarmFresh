@@ -15,12 +15,11 @@ const ImageSlider = () => {
         paginationStyle={styles.pagination}
         dotStyle={styles.dot}
         activeDotStyle={styles.activeDot}
-        removeClippedSubviews={false} // Prevent clipping of images
-        scrollEnabled={true} // Enable scrolling
-        loop={true} // Enable looping
-        index={0} // Start from the first slide
-        duration={300} // Animation duration for transitions
-      >
+        removeClippedSubviews={false}
+        scrollEnabled={true}
+        loop={true}
+        index={0}
+        duration={300}>
         <View style={styles.slide}>
           <Image
             source={ImageNames.ORANGE}

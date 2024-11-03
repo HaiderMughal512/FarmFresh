@@ -1,4 +1,4 @@
-import {View, Text, Button, FlatList} from 'react-native';
+import {View, Text, Button, FlatList, ScrollView} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {Card} from '../../components';
@@ -8,26 +8,24 @@ const Like = () => {
     state => state.favouriteReducer?.favouriteList,
   );
   return (
-    <View style={{flex: 1}}>
+    <ScrollView style={{flex: 1}}>
       <FlatList
         data={favourites}
-        contentContainerStyle={{flex: 1, alignItems: 'center'}}
+        contentContainerStyle={{flex: 1}}
         numColumns={2}
-        scrollEnabled={true}
+        scrollEnabled={false}
         renderItem={({item}) => {
           return <Card item={item} />;
         }}
-        keyExtractor={({index}) => {
-          return index;
-        }}
+        keyExtractor={item => item.P_id}
       />
-      <Button
+      {/* <Button
         title="press"
         onPress={() => {
           console.log('favouriteList', favourites);
         }}
-      />
-    </View>
+      /> */}
+    </ScrollView>
   );
 };
 

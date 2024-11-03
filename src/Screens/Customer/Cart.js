@@ -76,7 +76,7 @@ const Cart = () => {
           {/* <Image source={{uri: item.image}} style={styles.productImage} /> */}
           <View style={styles.productDetails}>
             <Text style={styles.productName}>{item.productName}</Text>
-            <Text style={styles.productPrice}>${item.price}</Text>
+            <Text style={styles.productPrice}>RS. {item.price}</Text>
             <Text style={styles.productId}>Product ID: {item.id}</Text>
           </View>
           <View
@@ -143,7 +143,7 @@ const Cart = () => {
       <View style={styles.subTotalView}>
         <Text style={styles.subTotalTitle}>Sub Total</Text>
         <Text style={styles.subTotalValue}>
-          $ {Math.round(products?.subtotal, 4)}
+          RS. {Math.round(products?.subtotal, 4)}
         </Text>
       </View>
 

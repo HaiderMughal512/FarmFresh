@@ -10,7 +10,7 @@ export default function index({list}) {
     <FlatList
       data={list}
       renderItem={renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.P_id}
       contentContainerStyle={styles.listContainer}
       horizontal={true}
       showsHorizontalScrollIndicator={false}

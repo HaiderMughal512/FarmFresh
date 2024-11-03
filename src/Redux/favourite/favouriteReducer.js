@@ -6,7 +6,7 @@ const favouriteReducer = (state = favouriteState, action) => {
     case 'ADD_TO_FAVOURITE':
       let exist = false;
       const addList = state.favouriteList.filter(item => {
-        if (item.id === action.payload.id) {
+        if (item.P_id === action.payload.P_id) {
           exist = true;
           item.quantity = item.quantity + 1;
           item.totalPrice = item.totalPrice + item.price;
@@ -22,7 +22,7 @@ const favouriteReducer = (state = favouriteState, action) => {
       };
     case 'REMOVE_FROM_FAVOURITE':
       const removeList = state.favouriteList.filter(item => {
-        return item.id !== action.payload.id;
+        return item.P_id !== action.payload.P_id;
       });
 
       return {

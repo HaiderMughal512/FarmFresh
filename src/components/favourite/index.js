@@ -15,17 +15,20 @@ const Favourites = ({item}) => {
   const favourites = useSelector(
     state => state.favouriteReducer?.favouriteList,
   );
-
   const handleFavourite = () => {
     if (isFavourite) {
+      console.log('Remove Favorite');
+
       dispatch(removeFromFavourite(item));
     } else {
+      console.log('Add Favorite');
+
       dispatch(addToFavourite(item));
     }
   };
 
   const checkfavourite = () => {
-    const isFav = favourites.some(prod => prod.id === item.id);
+    const isFav = favourites.some(prod => prod?.P_id == item?.P_id);
     setFavourite(isFav);
   };
 

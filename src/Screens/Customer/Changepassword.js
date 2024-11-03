@@ -35,7 +35,6 @@ const Changepassword = () => {
           onChangeText={setcurrpassword}
         />
       </View>
-
       {/* New Password Input */}
       <View style={styles.inputContainer}>
         <Image
@@ -49,8 +48,8 @@ const Changepassword = () => {
           onChange={setnewpassword}
         />
       </View>
-
       {/* Confirm New Password Input */}
+      //{' '}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/padlock.png')}
@@ -63,7 +62,6 @@ const Changepassword = () => {
           onChange={setconnewpassword}
         />
       </View>
-
       {/* Update Password Button */}
       <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
         <Text style={styles.updateText}>Update Password</Text>

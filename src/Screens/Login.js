@@ -1,4 +1,11 @@
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Custominput from '../common/Custominput';
@@ -11,9 +18,15 @@ const Login = () => {
   const navigation = useNavigation();
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      errorMessage('Login Error', 'please fill all the feilds');
+      return;
+    }
+    setLoading(true);
     console.log(email, password);
     const res = await login(email, password, 'Farmer');
     console.log(res);
@@ -22,13 +35,16 @@ const Login = () => {
       dispatch(addUser(res));
 
       if (res?.U_role === 'Customer') {
+        console.log('Navigation');
+
         navigation.navigate('Home');
       } else {
         navigation.navigate('FarmerHome');
       }
     } else {
-      errorMessage('Authenticatipon', 'User Not Exist');
+      errorMessage('Authentication', 'User Not Exist');
     }
+    setLoading(false);
   };
   return (
     <View>
@@ -45,19 +61,24 @@ const Login = () => {
         type="password"
         onChangeText={setpassword}
       />
-      <TouchableOpacity
-        style={{
-          height: 50,
-          width: '85%',
-          backgroundColor: '#000',
-          alignSelf: 'center',
-          marginTop: 20,
-          borderRadius: 20,
-          alignItems: 'center',
-        }}
-        onPress={handleLogin}>
-        <Text style={{color: 'white', paddingTop: 13}}>Login</Text>
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" color="red" />
+      ) : (
+        <TouchableOpacity
+          style={{
+            height: 50,
+            width: '85%',
+            backgroundColor: '#000',
+            alignSelf: 'center',
+            marginTop: 20,
+            borderRadius: 20,
+            alignItems: 'center',
+          }}
+          onPress={handleLogin}>
+          <Text style={{color: 'white', paddingTop: 13}}>Login</Text>
+        </TouchableOpacity>
+      )}
+
       {/* <TouchableOpacity
         style={{
           height: 50,

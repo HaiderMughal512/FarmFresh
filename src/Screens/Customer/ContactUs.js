@@ -1,4 +1,11 @@
-import { View, Text, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import React from 'react';
 
 const Contactus = () => {
@@ -6,37 +13,31 @@ const Contactus = () => {
     <View style={styles.container}>
       {/* Name Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/person.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/person.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Name" 
-          style={styles.textInput} 
-        />
+        <TextInput placeholder="Name" style={styles.textInput} />
       </View>
-      
+
       {/* Email Input */}
       <View style={styles.inputContainer}>
-        <Image 
-          source={require('../Customer/icons/email.png')} 
-          style={styles.icon} 
+        <Image
+          source={require('../Customer/icons/email.png')}
+          style={styles.icon}
         />
-        <TextInput 
-          placeholder="Email" 
-          style={styles.textInput} 
-        />
+        <TextInput placeholder="Email" style={styles.textInput} />
       </View>
-      
+
       {/* Message Input */}
       <View style={styles.messageContainer}>
-        <TextInput 
-          placeholder="Message" 
-          style={styles.messageInput} 
-          multiline={true} 
+        <TextInput
+          placeholder="Message"
+          style={styles.messageInput}
+          multiline={true}
         />
       </View>
-      
+
       {/* Submit Button */}
       <TouchableOpacity style={styles.submitButton}>
         <Text style={styles.submitText}>Submit</Text>

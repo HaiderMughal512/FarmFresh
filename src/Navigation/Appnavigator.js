@@ -7,6 +7,7 @@ import Drawernavigator from './Drawernavigator'; // Import Drawernavigator
 import Changepassword from '../Screens/Customer/Changepassword';
 import Cart from '../Screens/Customer/Cart';
 import FarmerHome from '../Screens/Farmer/home';
+import Description from '../components/description';
 
 const Stack = createNativeStackNavigator(); // Ensure 'Stack' is correctly defined
 
@@ -22,6 +23,11 @@ const Appnavigator = () => {
         <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Description"
+          component={Description}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -48,7 +54,13 @@ const Appnavigator = () => {
         <Stack.Screen
           name="Changepassword"
           component={Changepassword}
-          options={{headerTitle: 'Change Password'}}
+          options={{
+            headerTitle: 'Change Password',
+            headerStyle: {
+              backgroundColor: '#28a745',
+            },
+            headerTintColor: '#fff',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
