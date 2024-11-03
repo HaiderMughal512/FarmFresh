@@ -17,8 +17,10 @@ import {
   removeFromCart,
 } from '../../Redux/cart/cartAction';
 import {placeOrder} from '../../api/orders';
+import {useNavigation} from '@react-navigation/native';
 
 const Cart = () => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const products = useSelector(state => state.cartReducer);
   const user = useSelector(state => state.userReducer?.user);
@@ -152,6 +154,9 @@ const Cart = () => {
     );
 
     console.log('Order Response', res);
+    if (res === 'Order Place Successfully') {
+      navigation.navigate('My Order');
+    }
   };
 
   useEffect(() => {

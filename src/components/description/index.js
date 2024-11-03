@@ -49,7 +49,7 @@ export default function Description({route}) {
           <Text style={styles.productPrice}>RS. {product.P_price}</Text>
           <Text style={styles.descriptionTitle}>Description</Text>
           <Text style={styles.descriptionText}>
-            {product.description ||
+            {product.P_description ||
               'No description available for this product.'}
           </Text>
         </View>
