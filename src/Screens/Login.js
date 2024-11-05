@@ -22,7 +22,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    if (!email || !password) {
+    if (!email.trim() || !password.trim()) {
       errorMessage('Login Error', 'please fill all the feilds');
       return;
     }
@@ -31,7 +31,7 @@ const Login = () => {
     const res = await login(email, password, 'Farmer');
     console.log(res);
 
-    if (res?.U_email === email) {
+    if (res?.U_email === email.trim()) {
       dispatch(addUser(res));
 
       if (res?.U_role === 'Customer') {

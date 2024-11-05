@@ -7,43 +7,77 @@ import {useNavigation} from '@react-navigation/native';
 const Myorder = () => {
   const [order, setOrder] = useState([]);
   const user = useSelector(state => state.userReducer.user);
+
   const getOrder = async () => {
     let res = await getMyOrders(user?.U_id);
     setOrder(res);
     console.log(res);
   };
+
   useEffect(() => {
     getOrder();
   }, []);
-  const OrderItem = ({Oi_price, Oi_quantity, P_id}) => {
+
+  const OrderItem = ({
+    O_amount,
+    O_date,
+    O_delivery_Address,
+    O_id,
+    O_payment_status,
+    O_status,
+    u_id,
+  }) => {
+    // Format the date for display
+    const formattedDate = new Date(O_date).toLocaleDateString();
+
     return (
       <View style={styles.itemContainer}>
-        <Text style={styles.productId}>Product ID: {P_id}</Text>
+        <Text style={styles.orderId}>Order ID: {O_id}</Text>
+        <Text style={styles.userId}>User ID: {u_id}</Text>
+
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Price:</Text>
-          <Text style={styles.value}>${Oi_price}</Text>
+          <Text style={styles.label}>Amount:</Text>
+          <Text style={styles.value}>${O_amount}</Text>
         </View>
+
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Status:</Text>
-          <Text style={styles.value}>{Oi_quantity}</Text>
+          <Text style={styles.label}>Date:</Text>
+          <Text style={styles.value}>{formattedDate}</Text>
         </View>
-        {/* <View style={styles.infoContainer}>
-          <Text style={styles.label}>Total:</Text>
-          <Text style={styles.value}>${Oi_price * Oi_quantity}</Text>
-        </View> */}
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Delivery Address:</Text>
+          <Text style={styles.value}>{O_delivery_Address}</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Payment Status:</Text>
+          <Text style={styles.value}>{O_payment_status}</Text>
+        </View>
+
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Order Status:</Text>
+          <Text style={styles.value}>{O_status}</Text>
+        </View>
       </View>
     );
   };
+
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={styles.title}>My Orders</Text>
       <FlatList
         data={order}
-        keyExtractor={item => item.P_id}
+        keyExtractor={item => item.O_id.toString()}
         renderItem={({item}) => (
           <OrderItem
-            Oi_price={item.O_amount}
-            Oi_quantity={item.O_status}
-            P_id={item.u_id}
+            O_amount={item.O_amount}
+            O_date={item.O_date}
+            O_delivery_Address={item.O_delivery_Address}
+            O_id={item.O_id}
+            O_payment_status={item.O_payment_status}
+            O_status={item.O_status}
+            u_id={item.u_id}
           />
         )}
       />
@@ -56,6 +90,7 @@ const Myorder = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -74,16 +109,21 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
-    elevation: 3, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  productId: {
+  orderId: {
     fontSize: 16,
     fontWeight: '600',
     color: '#444',
+    marginBottom: 5,
+  },
+  userId: {
+    fontSize: 14,
+    color: '#666',
     marginBottom: 10,
   },
   infoContainer: {
@@ -101,4 +141,5 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 });
+
 export default Myorder;

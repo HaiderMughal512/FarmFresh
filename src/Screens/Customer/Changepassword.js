@@ -22,7 +22,6 @@ const Changepassword = () => {
   };
   return (
     <View style={styles.container}>
-      {/* Current Password Input */}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/padlock.png')}
@@ -35,7 +34,7 @@ const Changepassword = () => {
           onChangeText={setcurrpassword}
         />
       </View>
-      {/* New Password Input */}
+
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/padlock.png')}
@@ -48,8 +47,7 @@ const Changepassword = () => {
           onChange={setnewpassword}
         />
       </View>
-      {/* Confirm New Password Input */}
-      //{' '}
+
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/padlock.png')}

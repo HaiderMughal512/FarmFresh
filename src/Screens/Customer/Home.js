@@ -20,15 +20,15 @@ const Home = () => {
   const getProducts = async () => {
     let res = await getProductList();
 
-    // console.log('Product data', res);
+    console.log('Product data', res);
 
     const frtLst = res.filter(item => {
-      return item.P_category === 'Fruit';
+      return item.P_category.trim() === 'Fruit';
     });
     setFruitList(frtLst);
 
     const vgtLst = res.filter(item => {
-      return item.P_category === 'Vegetable';
+      return item.P_category.trim() === 'Vegetable';
     });
     setVegetableList(vgtLst);
 
