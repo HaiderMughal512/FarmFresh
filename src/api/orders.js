@@ -32,5 +32,6 @@ export const getMyOrders = async userid => {
     return json;
   } catch (error) {
     console.log(error);
+    console.log(getMyOrders);
   }
 };

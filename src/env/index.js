@@ -1,4 +1,4 @@
-const ip = 'http://192.168.0.120/FarmFresh_Backend/api/';
+const ip = 'http://192.168.0.122/FarmFresh_Backend/api/';
 export default ip;
 
-export const imageIp = 'http://192.168.0.120/FarmFresh_Backend/Images/';
+export const imageIp = 'http://192.168.0.122/FarmFresh_Backend/Images/';

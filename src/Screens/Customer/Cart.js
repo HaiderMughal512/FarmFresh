@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import Iconant from 'react-native-vector-icons/AntDesign';
 import {
+  clearData,
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
@@ -155,6 +156,8 @@ const Cart = () => {
 
     console.log('Order Response', res);
     if (res === 'Order Place Successfully') {
+      dispatch(clearData());
+
       navigation.navigate('My Order');
     }
   };

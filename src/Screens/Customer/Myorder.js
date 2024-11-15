@@ -1,62 +1,61 @@
 import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {getMyOrders} from '../../api/orders';
 import {useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const Myorder = () => {
-  const [order, setOrder] = useState([]);
-  const user = useSelector(state => state.userReducer.user);
+  const list = useSelector(state => state.cartReducer?.productlist);
+  const [orders, setOrders] = useState([]);
+  const [error, setError] = useState(null); // For error handling
+  const user = useSelector(state => state.userReducer?.user);
 
   const getOrder = async () => {
-    let res = await getMyOrders(user?.U_id);
-    setOrder(res);
-    console.log(res);
+    try {
+      let res = await getMyOrders(user?.U_id);
+      setOrders(res);
+      console.log(res);
+    } catch (error) {
+      console.error('Failed to fetch orders', error);
+      setError('Unable to fetch your orders. Please try again.');
+    }
   };
 
   useEffect(() => {
     getOrder();
   }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getOrder();
+    }, [list]),
+  );
 
   const OrderItem = ({
+    O_id,
     O_amount,
     O_date,
     O_delivery_Address,
-    O_id,
-    O_payment_status,
     O_status,
-    u_id,
   }) => {
-    // Format the date for display
-    const formattedDate = new Date(O_date).toLocaleDateString();
-
     return (
       <View style={styles.itemContainer}>
-        <Text style={styles.orderId}>Order ID: {O_id}</Text>
-        <Text style={styles.userId}>User ID: {u_id}</Text>
-
+        <Text style={styles.productId}>Order ID: {O_id}</Text>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Amount:</Text>
           <Text style={styles.value}>${O_amount}</Text>
         </View>
-
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Date:</Text>
-          <Text style={styles.value}>{formattedDate}</Text>
+          <Text style={styles.value}>
+            {new Date(O_date).toLocaleDateString()}
+          </Text>
         </View>
-
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Delivery Address:</Text>
           <Text style={styles.value}>{O_delivery_Address}</Text>
         </View>
-
         <View style={styles.infoContainer}>
-          <Text style={styles.label}>Payment Status:</Text>
-          <Text style={styles.value}>{O_payment_status}</Text>
-        </View>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.label}>Order Status:</Text>
+          <Text style={styles.label}>Status:</Text>
           <Text style={styles.value}>{O_status}</Text>
         </View>
       </View>
@@ -65,26 +64,27 @@ const Myorder = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Orders</Text>
+      {error && <Text style={styles.errorText}>{error}</Text>}
+
       <FlatList
-        data={order}
-        keyExtractor={item => item.O_id.toString()}
+        data={orders}
+        keyExtractor={item => item.O_id.toString()} // Use O_id as key extractor
         renderItem={({item}) => (
           <OrderItem
+            O_id={item.O_id}
             O_amount={item.O_amount}
             O_date={item.O_date}
             O_delivery_Address={item.O_delivery_Address}
-            O_id={item.O_id}
-            O_payment_status={item.O_payment_status}
             O_status={item.O_status}
-            u_id={item.u_id}
           />
         )}
       />
+
+      {/* This button is for debugging and testing */}
       <Button
         title="Check"
         onPress={() => {
-          console.log('My Orders', order);
+          console.log('My Orders:', orders);
         }}
       />
     </View>
@@ -109,21 +109,16 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
-    elevation: 3,
-    shadowColor: '#000',
+    elevation: 3, // Adds shadow for Android
+    shadowColor: '#000', // Adds shadow for iOS
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  orderId: {
+  productId: {
     fontSize: 16,
     fontWeight: '600',
     color: '#444',
-    marginBottom: 5,
-  },
-  userId: {
-    fontSize: 14,
-    color: '#666',
     marginBottom: 10,
   },
   infoContainer: {
@@ -139,6 +134,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     color: '#333',
+  },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 16,
   },
 });
 

@@ -38,6 +38,7 @@ const cartReducer = (state = cartState, action) => {
               },
             ],
       };
+
     case 'REMOVE_FROM_CART':
       const removeList = state.productlist.filter(item => {
         return item.id !== action.payload.id;
@@ -69,6 +70,13 @@ const cartReducer = (state = cartState, action) => {
         subtotal: state.subtotal + action.payload.price,
         totalProducts: state.totalProducts,
       };
+    case 'CLEAR_CART':
+      return {
+        productlist: [],
+        subtotal: 0,
+        totalProducts: 0,
+      };
+
     case 'DECREASE_QUANTITY':
       const newLists = state.productlist.filter(item => {
         if (item.id === action.payload.id) {

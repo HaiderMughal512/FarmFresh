@@ -35,7 +35,6 @@ const MyAccounts = ({navigation}) => {
   // }, []);
   return (
     <View style={styles.container}>
-      {/* Name Input */}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/person.png')}
@@ -49,7 +48,6 @@ const MyAccounts = ({navigation}) => {
         />
       </View>
 
-      {/* Phone Number Input */}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/telephone.png')}
@@ -63,7 +61,6 @@ const MyAccounts = ({navigation}) => {
         />
       </View>
 
-      {/* Email Input */}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/email.png')}
@@ -78,7 +75,6 @@ const MyAccounts = ({navigation}) => {
         />
       </View>
 
-      {/* Address Input */}
       <View style={styles.inputContainer}>
         <Image
           source={require('../Customer/icons/location.png')}
@@ -92,7 +88,6 @@ const MyAccounts = ({navigation}) => {
         />
       </View>
 
-      {/* Change Password Button */}
       <TouchableOpacity
         style={styles.changePasswordButton}
         onPress={() => navigation.navigate('Changepassword')}>

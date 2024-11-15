@@ -53,7 +53,6 @@ export default function Card({item}) {
         />
       </View>
 
-      {/* Product Info Section */}
       <View style={styles.infoContainer}>
         <Text style={styles.productName}>{item?.P_name}</Text>
         <Text style={styles.price}>RS. {item?.P_price}</Text>

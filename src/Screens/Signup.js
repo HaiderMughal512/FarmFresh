@@ -68,16 +68,16 @@ const Signup = () => {
             value={name}
           />
           <Custominput
-            placeholder="Enter your Phone Number"
-            icon={require('../images/telephone.png')}
-            onChangeText={setPhone}
-            value={phone}
-          />
-          <Custominput
             placeholder="Enter your Email id"
             icon={require('../images/mail.png')}
             onChangeText={setEmail}
             value={email}
+          />
+          <Custominput
+            placeholder="Enter your Phone Number"
+            icon={require('../images/telephone.png')}
+            onChangeText={setPhone}
+            value={phone}
           />
           <Custominput
             placeholder="Enter Address"
