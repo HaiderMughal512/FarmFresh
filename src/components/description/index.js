@@ -10,23 +10,26 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addToCart} from '../../Redux/cart/cartAction';
+import {imageIp} from '../../env';
 
 export default function Description({route}) {
+  const user = useSelector(state => state.userReducer?.user);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {product} = route?.params || {};
 
   const handleProduct = () => {
     if (!product) return;
-    console.log('Price', product.P_price);
+
+    const imageUri = `${imageIp}${product?.images}`;
 
     dispatch(
       addToCart({
         productName: product.P_name,
         price: product.P_price,
-        imageSource: '',
+        imageSource: imageUri,
         id: product.P_id,
         quantity: 1,
       }),
@@ -42,10 +45,18 @@ export default function Description({route}) {
         <Icon name="arrow-left" size={24} color="#000" />
       </TouchableOpacity>
 
-      {/* Conditional Rendering for Product Data */}
       {product ? (
         <View style={styles.detailsContainer}>
           <Text style={styles.productName}>{product.P_name}</Text>
+          {product?.images ? (
+            <Image
+              source={{uri: `${imageIp}${product.images}`}}
+              style={styles.productImage}
+              resizeMode="contain"
+            />
+          ) : (
+            <Text style={styles.errorMessage}>Image not available</Text>
+          )}
           <Text style={styles.productPrice}>RS. {product.P_price}</Text>
           <Text style={styles.descriptionTitle}>Description</Text>
           <Text style={styles.descriptionText}>
@@ -64,7 +75,9 @@ export default function Description({route}) {
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
           style={styles.gradientButton}>
-          <Text style={styles.addButtonText}>Add to Cart</Text>
+          <Text style={styles.addButtonText}>
+            {user?.U_role === 'Farmer' ? 'Feedback' : 'Add to Cart'}
+          </Text>
         </LinearGradient>
       </TouchableOpacity>
     </ScrollView>
@@ -95,6 +108,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginTop: 20,
+  },
+  productImage: {
+    width: '100%',
+    height: 250,
+    marginVertical: 16,
   },
   productPrice: {
     fontSize: 24,

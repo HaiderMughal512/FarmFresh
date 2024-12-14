@@ -16,6 +16,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [fruitList, setFruitList] = useState([]);
   const [vegetableList, setVegetableList] = useState([]);
+  const [search, setSearch] = useState('');
 
   const getProducts = async () => {
     let res = await getProductList();
@@ -55,17 +56,22 @@ const Home = () => {
             height: 55,
             width: '90%',
             borderRadius: 10,
-            borderWidth: 1,
+            borderWidth: 2,
             alignSelf: 'center',
             marginTop: 10,
             flexDirection: 'row',
+            // backgroundColor: 'red',
           }}>
           <Image
             source={require('../Customer/icons/search.png')}
             style={{height: 24, width: 24, alignSelf: 'center', marginLeft: 10}}
           />
 
-          <TextInput placeholder="Search" style={{paddingLeft: 20}} />
+          <TextInput
+            placeholder="Search"
+            style={{paddingLeft: 20}}
+            onChangeText={setSearch}
+          />
         </View>
         <Text
           style={{
@@ -79,7 +85,7 @@ const Home = () => {
         </Text>
         <View>
           {/* <Topselling/> */}
-          <TopProducts list={fruitList} key={1} />
+          <TopProducts list={fruitList} search={search} key={1} />
         </View>
         <Text
           style={{
@@ -96,7 +102,7 @@ const Home = () => {
       <Text style={{marginLeft:10,marginTop:10,fontSize:20,fontWeight:'bold',color:'black'}}>Everday Essentials</Text>
       </View> */}
         <View>
-          <TopProducts list={vegetableList} key={2} />
+          <TopProducts list={vegetableList} search={search} key={2} />
         </View>
       </View>
     </ScrollView>

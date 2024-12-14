@@ -8,7 +8,7 @@ import {
 import React, {useEffect} from 'react';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {addToCart} from '../../Redux/cart/cartAction';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -18,6 +18,8 @@ import Description from '../description';
 import {imageIp} from '../../env';
 
 export default function Card({item}) {
+  const user = useSelector(state => state.userReducer?.user);
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const handelAddCart = () => {
@@ -64,7 +66,9 @@ export default function Card({item}) {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             style={styles.gradientButton}>
-            <Text style={styles.addButtonText}>ADD</Text>
+            <Text style={styles.addButtonText}>
+              {user?.U_role === 'Farmer' ? 'Feedback' : 'ADD'}
+            </Text>
           </LinearGradient>
         </TouchableOpacity>
       </View>

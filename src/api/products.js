@@ -9,6 +9,15 @@ export const getProductList = async () => {
     console.log(error);
   }
 };
+export const getFarmerProductList = async id => {
+  try {
+    let response = await fetch(ip + `products/getFarmerProducts?id=${id}`);
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const addProducts = async formData => {
   try {

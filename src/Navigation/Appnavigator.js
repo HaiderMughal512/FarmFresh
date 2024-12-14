@@ -9,6 +9,11 @@ import Cart from '../Screens/Customer/Cart';
 import FarmerHome from '../Screens/Farmer/home';
 import Description from '../components/description';
 import AddProduct from '../Screens/Farmer/addProduct';
+import FarmerNavigation from './FarmerNavigation';
+import FarmerPasswordUpdate from '../Screens/Farmer/FarmerPasswordUpdate';
+// import MainProduct from '../Screens/Farmer/products/MainProduct';
+// import DeleteProduct from '../Screens/Farmer/products/DeleteProduct';
+// import UpdateProduct from '../Screens/Farmer/products/UpdateProduct';
 
 const Stack = createNativeStackNavigator(); // Ensure 'Stack' is correctly defined
 
@@ -36,6 +41,21 @@ const Appnavigator = () => {
           component={Signup}
           options={{headerShown: false}}
         />
+        {/* <Stack.Screen
+          name="MainProduct"
+          component={MainProduct}
+          options={{headerShown: false}}
+        /> */}
+        {/* <Stack.Screen
+          name="DeleteProduct"
+          component={DeleteProduct}
+          options={{headerShown: false}}
+        /> */}
+        {/* <Stack.Screen
+          name="UpdateProduct"
+          component={UpdateProduct}
+          options={{headerShown: false}}
+        /> */}
         <Stack.Screen
           name="Home"
           component={Drawernavigator}
@@ -51,10 +71,19 @@ const Appnavigator = () => {
           component={Cart}
           options={{headerShown: false}}
         />
-
+        <Stack.Screen
+          name="FarmerNavigation"
+          component={FarmerNavigation}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="AddProduct"
           component={AddProduct}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="FarmerPasswordUpdate"
+          component={FarmerPasswordUpdate}
           options={{headerShown: false}}
         />
 
