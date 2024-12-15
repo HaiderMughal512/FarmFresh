@@ -132,7 +132,7 @@ const Cart = () => {
   };
 
   const handleCheckOut = async () => {
-    // console.log('User', products);
+    console.log('User', products?.productlist);
 
     const orderList = products?.productlist.map(item => ({
       P_id: item?.id,
@@ -142,17 +142,18 @@ const Cart = () => {
 
     console.log('Order List', orderList);
 
-    let res = await placeOrder(
-      {
-        u_id: user?.U_id,
-        O_date: new Date(),
-        O_amount: Math.round(products?.subtotal, 4),
-        O_payment_status: 'Cash',
-        O_delivery_Address: user?.U_address,
-        O_status: 'Pending',
-      },
-      orderList,
-    );
+    // let res = await placeOrder(
+    //   {
+    //     u_id: user?.U_id,
+    //     O_date: new Date(),
+    //     O_amount: Math.round(products?.subtotal, 4),
+    //     O_payment_status: 'Cash',
+    //     O_delivery_Address: user?.U_address,
+    //     O_status: 'Pending',
+    //     F_id:
+    //   },
+    //   orderList,
+    // );
 
     console.log('Order Response', res);
     if (res === 'Order Place Successfully') {

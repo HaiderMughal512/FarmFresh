@@ -77,7 +77,7 @@ const Appnavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="AddProduct"
+          name="EditProduct"
           component={AddProduct}
           options={{headerShown: false}}
         />

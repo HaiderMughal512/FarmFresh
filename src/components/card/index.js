@@ -23,7 +23,7 @@ export default function Card({item}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const handelAddCart = () => {
-    console.log('Price', item.P_price);
+    console.log('Price', item.f_id);
 
     dispatch(
       addToCart({
@@ -32,6 +32,7 @@ export default function Card({item}) {
         imageSource: '',
         id: item?.P_id,
         quantity: 1,
+        F_id: item.f_id,
       }),
     );
     // navigation.navigate('Cart');

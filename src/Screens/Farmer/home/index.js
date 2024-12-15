@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import Custominput from '../../../common/Custominput';
 import {Card, TopProducts} from '../../../components';
 import {getFarmerProductList} from '../../../api/products';
 import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
 export default function FarmerHome() {
   const user = useSelector(state => state.userReducer?.user);
@@ -39,9 +40,12 @@ export default function FarmerHome() {
     setLoading(false);
     console.log(res);
   };
-  useEffect(() => {
-    getProducts();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getProducts();
+    }, []),
+  );
 
   return loading ? (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

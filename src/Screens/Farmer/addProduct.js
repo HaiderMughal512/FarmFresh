@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,18 @@ import {
 import {useSelector} from 'react-redux';
 import {launchImageLibrary} from 'react-native-image-picker';
 import Custominput from '../../common/Custominput';
-import {addProducts} from '../../api/products';
+import {addProducts, editProducts} from '../../api/products';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {imageIp} from '../../env';
 
 export default function AddProduct() {
   const user = useSelector(state => state.userReducer.user);
+  const route = useRoute();
+  const navigation = useNavigation();
 
   const [productname, setproductname] = useState('');
   const [description, setdescription] = useState('');
@@ -55,7 +63,6 @@ export default function AddProduct() {
   const handleAddProduct = async () => {
     try {
       let formData = new FormData();
-      formData.append('file', image);
       formData.append('f_id', user?.U_id);
       formData.append('P_name', productname);
       formData.append('P_description', description);
@@ -63,12 +70,55 @@ export default function AddProduct() {
       formData.append('P_quantity', quantity);
       formData.append('P_category', category);
 
-      let res = await addProducts(formData);
-      console.log('Add Product Response', res);
+      console.log('Image ', image);
+
+      if (route.params?.edit) {
+        const img = image;
+        setimage({name: img, type: 'image/jpeg'});
+        formData.append('file', image);
+
+        console.log('Edit Image', image);
+
+        let res = await editProducts(route.params?.data?.P_id, formData);
+        console.log('Edit Product Response', res);
+        if (res === 'Product updated successfully.') {
+          navigation.navigate('FarmerNavigation');
+        }
+      } else {
+        formData.append('file', image);
+
+        let res = await addProducts(formData);
+
+        console.log('Add Product Response', res);
+        if (res === 'Product Added Successfully') {
+          navigation.navigate('FarmerNavigation');
+        }
+      }
     } catch (error) {
       console.log('Error adding product:', error);
     }
   };
+
+  const setAttributesValue = () => {
+    const data = route.params?.data;
+    console.log('Setting Data');
+
+    setproductname(data?.P_name);
+    setdescription(data?.P_description);
+    setprice(data?.P_price.toString());
+    setquantity(data?.P_quantity.toString());
+    setcategory(data?.P_category);
+    setimage(data?.images);
+    console.log('Edit Product Data', data);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (route.params?.edit) {
+        setAttributesValue();
+      }
+    }, [route.params?.data?.P_id]),
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -78,38 +128,51 @@ export default function AddProduct() {
         placeholder="Product Name"
         onChangeText={setproductname}
         style={styles.input}
+        value={productname}
       />
       <Custominput
         placeholder="Description"
         onChangeText={setdescription}
         style={styles.input}
+        value={description}
       />
       <Custominput
         placeholder="Price"
         onChangeText={setprice}
         style={styles.input}
+        value={price}
       />
       <Custominput
         placeholder="Quantity"
         onChangeText={setquantity}
         style={styles.input}
+        value={quantity}
       />
       <Custominput
         placeholder="Category"
         onChangeText={setcategory}
         style={styles.input}
+        value={category}
       />
 
       <TouchableOpacity style={styles.imageButton} onPress={chooseImage}>
         <Text style={styles.buttonText}>Choose Image</Text>
       </TouchableOpacity>
 
-      {image?.uri ? (
-        <Image
-          source={{uri: image.uri}}
-          style={styles.imagePreview}
-          resizeMode="contain"
-        />
+      {image ? (
+        image?.uri ? (
+          <Image
+            source={{uri: image.uri}}
+            style={styles.imagePreview}
+            resizeMode="contain"
+          />
+        ) : (
+          <Image
+            source={{uri: `${imageIp}${image}`}}
+            style={styles.imagePreview}
+            resizeMode="contain"
+          />
+        )
       ) : (
         <Text style={styles.placeholderText}>No Image Selected</Text>
       )}

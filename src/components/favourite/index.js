@@ -8,8 +8,11 @@ import {
   addToFavourite,
   removeFromFavourite,
 } from '../../Redux/favourite/favouriteAction';
+import {deleteProduct} from '../../api/products';
+import {useNavigation} from '@react-navigation/native';
 
 const Favourites = ({item}) => {
+  const navigation = useNavigation();
   const user = useSelector(state => state.userReducer?.user);
   const dispatch = useDispatch();
   const [isFavourite, setFavourite] = useState(false);
@@ -29,10 +32,14 @@ const Favourites = ({item}) => {
 
   const handleEdit = () => {
     console.log('Edit clicked');
+    navigation.navigate('EditProduct', {data: item, edit: true});
     closeMenu();
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    let res = await deleteProduct(item?.P_id);
+    console.log('Delete Item Response', res);
+
     console.log('Delete clicked');
     closeMenu();
   };
