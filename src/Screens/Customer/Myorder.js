@@ -1,4 +1,11 @@
-import {View, Text, Button, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {getMyOrders} from '../../api/orders';
 import {useSelector} from 'react-redux';
@@ -6,6 +13,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 const Myorder = () => {
   const list = useSelector(state => state.cartReducer?.productlist);
+  const navigation = useNavigation();
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null); // For error handling
   const user = useSelector(state => state.userReducer?.user);
@@ -14,7 +22,7 @@ const Myorder = () => {
     try {
       let res = await getMyOrders(user?.U_id);
       setOrders(res);
-      console.log(res);
+      console.log('My Orders', res);
     } catch (error) {
       console.error('Failed to fetch orders', error);
       setError('Unable to fetch your orders. Please try again.');
@@ -30,15 +38,29 @@ const Myorder = () => {
     }, [list]),
   );
 
+  const handleOrderPress = (id, F_id) => {
+    console.log('Order Id', F_id);
+    navigation.navigate('OrderDetail', {
+      id: id,
+      role: 'Customer',
+      farmerId: F_id,
+    });
+  };
+
   const OrderItem = ({
     O_id,
     O_amount,
     O_date,
     O_delivery_Address,
     O_status,
+    F_id,
   }) => {
     return (
-      <View style={styles.itemContainer}>
+      <TouchableOpacity
+        style={styles.itemContainer}
+        onPress={() => {
+          handleOrderPress(O_id, F_id);
+        }}>
         <Text style={styles.productId}>Order ID: {O_id}</Text>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Amount:</Text>
@@ -58,7 +80,7 @@ const Myorder = () => {
           <Text style={styles.label}>Status:</Text>
           <Text style={styles.value}>{O_status}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -76,6 +98,7 @@ const Myorder = () => {
             O_date={item.O_date}
             O_delivery_Address={item.O_delivery_Address}
             O_status={item.O_status}
+            F_id={item.F_id}
           />
         )}
       />

@@ -6,6 +6,8 @@ const cartState = {
 const cartReducer = (state = cartState, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
+      console.log('Payload', action.payload);
+
       let exist = false;
       const addList = state.productlist.filter(item => {
         if (item.id === action.payload.id) {
@@ -35,6 +37,7 @@ const cartReducer = (state = cartState, action) => {
                 imageSource: action.payload.imageSource,
                 quantity: action.payload.quantity,
                 totalPrice: action.payload.price,
+                f_id: action.payload.F_id,
               },
             ],
       };

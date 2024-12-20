@@ -35,11 +35,13 @@ export default function Card({item}) {
         F_id: item.f_id,
       }),
     );
-    // navigation.navigate('Cart');
+    if (user?.U_role === 'Farmer') {
+      navigation.navigate('Details', {id: item?.P_id});
+    }
   };
 
   const hanledes = () => {
-    navigation.navigate('Description', {product: item});
+    navigation.navigate('Details', {id: item?.P_id});
   };
   return (
     <TouchableOpacity style={styles.container} onPress={hanledes}>

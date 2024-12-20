@@ -7,3 +7,4 @@ export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
 
 export const ADD_USER = 'ADD_USER';
 export const CLEAR_CART = 'CLEAR_CART';
+export const CLEAR_USER = 'CLEAR_USER';

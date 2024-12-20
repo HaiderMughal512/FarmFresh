@@ -1,8 +1,12 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {clearUser} from '../../Redux/user/userAction';
 
 const Logout = ({navigation}) => {
+  const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(clearUser());
     navigation.navigate('Login');
   };
 

@@ -32,6 +32,7 @@ export default function Description({route}) {
         imageSource: imageUri,
         id: product.P_id,
         quantity: 1,
+        F_id: product?.f_id,
       }),
     );
     navigation.navigate('Cart');

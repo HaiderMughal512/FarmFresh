@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Custominput from '../common/Custominput';
 import {login} from '../api/User';
@@ -16,11 +16,17 @@ import {addUser} from '../Redux/user/userAction';
 
 const Login = () => {
   const navigation = useNavigation();
+
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   setemail('');
+  //   setpassword('');
+  //   setLoading(false);
+  // }, []);
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
       errorMessage('Login Error', 'please fill all the feilds');
@@ -41,9 +47,13 @@ const Login = () => {
       } else {
         navigation.navigate('FarmerNavigation');
       }
+      setemail('');
+      setpassword('');
     } else {
       errorMessage('Authentication', 'User Not Exist');
     }
+    // setemail('');
+    // setpassword('');
     setLoading(false);
   };
   return (
@@ -54,14 +64,28 @@ const Login = () => {
         placeholder="Enter your Email id"
         icon={require('../images/mail.png')}
         onChangeText={setemail}
+        value={email}
       />
       <Custominput
         placeholder="Enter your password"
         icon={require('../images/padlock.png')}
         type="password"
         onChangeText={setpassword}
+        value={password}
       />
-
+      <Text
+        style={{
+          flexDirection: 'row',
+          marginTop: 10,
+          marginRight: 20,
+          fontSize: 14,
+          fontWeight: '700',
+          color: 'blue',
+          textDecorationLine: 'underline',
+          alignSelf: 'flex-end',
+        }}>
+        Forget Password?
+      </Text>
       {loading ? (
         <ActivityIndicator size="large" color="red" />
       ) : (

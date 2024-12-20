@@ -11,6 +11,9 @@ import Description from '../components/description';
 import AddProduct from '../Screens/Farmer/addProduct';
 import FarmerNavigation from './FarmerNavigation';
 import FarmerPasswordUpdate from '../Screens/Farmer/FarmerPasswordUpdate';
+import OrderDetails from '../Screens/Farmer/orderDetails';
+import Feedback from '../Screens/Feedback';
+import Details from '../Screens/details';
 // import MainProduct from '../Screens/Farmer/products/MainProduct';
 // import DeleteProduct from '../Screens/Farmer/products/DeleteProduct';
 // import UpdateProduct from '../Screens/Farmer/products/UpdateProduct';
@@ -79,6 +82,23 @@ const Appnavigator = () => {
         <Stack.Screen
           name="EditProduct"
           component={AddProduct}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="OrderDetail"
+          component={OrderDetails}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Feedback"
+          component={Feedback}
           options={{headerShown: false}}
         />
         <Stack.Screen

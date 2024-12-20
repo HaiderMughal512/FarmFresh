@@ -70,3 +70,13 @@ export const deleteProduct = async id => {
     console.log('Delete Product', error);
   }
 };
+
+export const getProductWithFeedback = async id => {
+  try {
+    let response = await fetch(ip + `products/getProductWithFeedback?id=${id}`);
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -8,6 +8,11 @@ const userReducer = (state = userstate, action) => {
       return {
         user: action.payload,
       };
+    case 'CLEAR_USER':
+      return {
+        user: {},
+      };
+
     default:
       return state;
   }
