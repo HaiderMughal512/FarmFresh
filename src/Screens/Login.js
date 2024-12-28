@@ -83,6 +83,9 @@ const Login = () => {
           color: 'blue',
           textDecorationLine: 'underline',
           alignSelf: 'flex-end',
+        }}
+        onPress={() => {
+          navigation.navigate('ForgetPassword');
         }}>
         Forget Password?
       </Text>

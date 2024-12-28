@@ -19,12 +19,16 @@ const Orders = () => {
   const user = useSelector(state => state.userReducer?.user);
   const navigation = useNavigation();
   const [order, setOrders] = useState([]);
+  const [users, setUsers] = useState([]);
   const [check, setCheck] = useState(0);
   const getOrder = async () => {
     try {
       let res = await getFarmerOrders(user?.U_id);
-      setOrders(res);
-      console.log(res);
+      console.log('Order Response with Users', res);
+
+      setOrders(res?.orders);
+      setUsers(res?.users);
+      console.log('User APi response', res);
     } catch (error) {
       console.error('Failed to fetch orders', error);
       setError('Unable to fetch your orders. Please try again.');
@@ -51,7 +55,13 @@ const Orders = () => {
     O_date,
     O_delivery_Address,
     O_status,
+    U_name,
+    U_number,
+    u_id,
   }) => {
+    const specificUser = users.find(user => user?.U_id === u_id);
+    console.log('Specific User', specificUser);
+
     return (
       <TouchableOpacity
         style={styles.itemContainer}
@@ -68,6 +78,14 @@ const Orders = () => {
           <Text style={styles.value}>
             {new Date(O_date).toLocaleDateString()}
           </Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <Text style={styles.value}>{specificUser?.U_name}</Text>
+        </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.label}>Phone:</Text>
+          <Text style={styles.value}>{specificUser?.U_number}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Delivery Address:</Text>
@@ -110,6 +128,9 @@ const Orders = () => {
             O_date={item.O_date}
             O_delivery_Address={item.O_delivery_Address}
             O_status={item.O_status}
+            U_name={user?.U_name}
+            U_number={user?.U_number}
+            u_id={item?.u_id}
           />
         )}
       />

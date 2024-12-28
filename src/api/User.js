@@ -13,6 +13,19 @@ export const login = async (username, password, role) => {
     console.log(error);
   }
 };
+export const forgotPassword = async (email, name) => {
+  try {
+    const response = await fetch(
+      `${ip}user/forgotpassword?email=${email}&name=${name}`,
+    );
+    const json = await response.json();
+
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const SignUp = async (username, password, phone, name, address) => {
   try {
     console.log(username, password);

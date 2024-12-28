@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  Button,
 } from 'react-native';
 import {useRoute} from '@react-navigation/native';
 import {getProductWithFeedback} from '../api/products';
@@ -17,6 +18,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {addToCart} from '../Redux/cart/cartAction';
 import {imageIp} from '../env';
+import {Menu, MenuDivider, MenuItem} from 'react-native-material-menu';
+import {deleteFeedback, editFeedback} from '../api/feedback';
 
 export default function Details() {
   const route = useRoute();
@@ -24,10 +27,15 @@ export default function Details() {
   const dispatch = useDispatch();
   const user = useSelector(state => state.userReducer?.user);
 
+  const menuRef = useRef();
+
   const [product, setProduct] = useState('');
   const [feedBacks, setFeedBacks] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [menuVisibile, setMenuVisible] = useState(false);
+
+  console.log('Login User', user);
 
   const getProduct = async () => {
     let res = await getProductWithFeedback(route.params?.id);
@@ -66,6 +74,36 @@ export default function Details() {
   const getUserDetails = userId => {
     const userDetail = users?.find(user => user.U_id === userId);
     return userDetail || {};
+  };
+
+  const openMenu = () => {
+    if (menuRef.current) {
+      menuRef.current.show();
+    }
+  };
+
+  const closeMenu = () => {
+    if (menuRef.current) {
+      menuRef.current.hide();
+    }
+  };
+
+  const handleEdit = async id => {
+    console.log('Edit Feedback...');
+
+    let res = await editFeedback(id, 'Hard Codded');
+
+    console.log('Edit Feedback Response', res);
+
+    setMenuVisible(false);
+  };
+
+  const handleDelete = async id => {
+    console.log('Delete Feedback...');
+    let res = await deleteFeedback(id);
+    console.log('Delete Feedback Response', res);
+
+    setMenuVisible(false);
   };
 
   return loading ? (
@@ -137,6 +175,28 @@ export default function Details() {
           const userDetail = getUserDetails(item.From_User); // Get user details for feedback
           return (
             <View style={styles.feedbackContainer}>
+              {/* <Menu
+                ref={menuRef}
+                // visible={menuVisibile}
+                anchor={
+                  <TouchableOpacity
+                    onPress={openMenu}
+                    style={{
+                      position: 'absolute',
+                      right: 5,
+                      width: '20',
+                      height: 20,
+                      backgroundColor: 'white',
+                      elevation: 2,
+                    }}>
+                    <Icon name="more-vertical" size={20} color="black" />
+                  </TouchableOpacity>
+                }
+                onRequestClose={closeMenu}>
+                <MenuItem onPress={handleEdit}>Edit</MenuItem>
+                <MenuDivider />
+                <MenuItem onPress={handleDelete}>Delete</MenuItem>
+              </Menu> */}
               <Text style={styles.feedbackUser}>
                 {userDetail.U_name || 'Anonymous User'}
               </Text>
@@ -147,6 +207,23 @@ export default function Details() {
               <Text style={styles.feedbackDate}>
                 {new Date(item.F_date).toDateString()}
               </Text>
+
+              {item?.From_User == user?.U_id && (
+                <Button
+                  title="Edit"
+                  onPress={() => {
+                    handleEdit(item?.Feed_id);
+                  }}
+                />
+              )}
+              {(item?.From_User == user?.U_id || user?.U_role === 'Farmer') && (
+                <Button
+                  title="Delete"
+                  onPress={() => {
+                    handleDelete(item?.Feed_id);
+                  }}
+                />
+              )}
             </View>
           );
         }}
