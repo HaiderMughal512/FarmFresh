@@ -56,9 +56,9 @@ const Signup = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-        <View>
+        <View style={{backgroundColor: 'white', flex: 1}}>
           <Image source={require('../images/logo.png')} style={styles.logo} />
           <Text style={styles.logintxt}>Create New Account</Text>
           <Custominput

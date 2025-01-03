@@ -17,6 +17,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {imageIp} from '../../env';
+// import {errorMessage} from '../../utils/Methods';
 
 export default function AddProduct() {
   const user = useSelector(state => state.userReducer.user);
@@ -59,6 +60,10 @@ export default function AddProduct() {
       }
     });
   };
+  // if (!price || !description || !quantity || !image || !category) {
+  //   errorMessage('submit the data correctly');
+  //   return false;
+  // }
 
   const handleAddProduct = async () => {
     try {
@@ -189,6 +194,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8f9fa',
     padding: 20,
+    bottom: 20,
   },
   header: {
     fontSize: 24,

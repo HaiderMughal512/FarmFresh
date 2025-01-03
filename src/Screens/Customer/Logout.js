@@ -11,7 +11,13 @@ const Logout = ({navigation}) => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+      }}>
       <Text style={{fontSize: 18, color: '#333', textAlign: 'center'}}>
         "Thank you for shopping with Farm Fresh! We hope to see you again soon."
       </Text>
@@ -26,8 +32,7 @@ const Logout = ({navigation}) => {
           alignItems: 'center',
           marginTop: 20,
         }}
-        onPress={handleLogout} // Attach the function here
-      >
+        onPress={handleLogout}>
         <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
       </TouchableOpacity>
     </View>

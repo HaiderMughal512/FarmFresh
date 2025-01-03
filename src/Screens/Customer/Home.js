@@ -41,14 +41,19 @@ const Home = () => {
   }, []);
 
   return loading ? (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
       <ActivityIndicator size={'large'} color={'red'} />
     </View>
   ) : (
     <ScrollView
       style={{flex: 1, marginBottom: 20}}
       showsVerticalScrollIndicator={false}>
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
         {/* <ImageSlider /> */}
         <ImageSliderNew />
         <View

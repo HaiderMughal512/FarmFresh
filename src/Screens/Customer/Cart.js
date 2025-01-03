@@ -159,7 +159,7 @@ const Cart = () => {
     if (res === 'Order Place Successfully') {
       dispatch(clearData());
 
-      navigation.navigate('My Order');
+      navigation.navigate('Myorder');
     }
   };
 

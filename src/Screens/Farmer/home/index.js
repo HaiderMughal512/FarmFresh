@@ -10,22 +10,26 @@ import {
   Keyboard,
   ScrollView,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {ImageNames} from '../../../images';
 import ImageSlider from '../../../components/imageSlider';
 import Custominput from '../../../common/Custominput';
 import {Card, TopProducts} from '../../../components';
 import {getFarmerProductList} from '../../../api/products';
 import {useSelector} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 
 export default function FarmerHome() {
   const user = useSelector(state => state.userReducer?.user);
+  const count = useSelector(state => state.notificationReducer?.count);
   const [fruit, setFruit] = useState([]);
   const [Vegetable, setVegetable] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
-
+  const navigation = useNavigation();
   const getProducts = async () => {
     let res = await getFarmerProductList(user?.U_id);
     const frtLst = res.filter(item => {
@@ -57,7 +61,22 @@ export default function FarmerHome() {
         <View style={styles.Imagecontainer}>
           <Image source={ImageNames.LOGO} style={styles.logo} />
           <Text style={styles.Farmtext}>Farm Fresh</Text>
+          <TouchableOpacity
+            style={{
+              width: 50,
+              height: 40,
+              // backgroundColor: 'red',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => {
+              navigation.navigate('Notifiaction');
+            }}>
+            <MaterialCommunityIcons name="bell-outline" size={25} />
+            <Text>{count}</Text>
+          </TouchableOpacity>
         </View>
+
         <View>
           <ImageSlider />
         </View>
@@ -111,6 +130,7 @@ const styles = StyleSheet.create({
     width: '90%',
     alignSelf: 'center',
     marginBottom: 5,
+    justifyContent: 'space-between',
 
     alignItems: 'center',
   },

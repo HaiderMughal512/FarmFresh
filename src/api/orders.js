@@ -45,7 +45,29 @@ export const getFarmerOrders = async userid => {
     console.log(error);
   }
 };
+export const getFarmerNotifiation = async userid => {
+  try {
+    console.log(userid);
+    let response = await fetch(
+      ip + `Notification/getNotification?id=${userid}`,
+    );
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+export const updateFarmerNotificationStatus = async id => {
+  try {
+    // console.log(userid);
+    let response = await fetch(ip + `Notification/updateNotification?id=${id}`);
+    let json = await response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const getOrderProducts = async id => {
   try {
     console.log(id);

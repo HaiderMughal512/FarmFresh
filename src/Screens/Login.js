@@ -13,6 +13,11 @@ import {login} from '../api/User';
 import {errorMessage} from '../utils/Methods';
 import {useDispatch} from 'react-redux';
 import {addUser} from '../Redux/user/userAction';
+import {getFarmerNotifiation} from '../api/orders';
+import {
+  setNotificationCount,
+  setNotificationList,
+} from '../Redux/notification/notificationAction';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -45,6 +50,14 @@ const Login = () => {
 
         navigation.navigate('Home');
       } else {
+        const notificationResponse = await getFarmerNotifiation(res?.U_id);
+        const unreadCount = notificationResponse.filter(
+          notification => notification.Status.trim() === 'Unread',
+        ).length;
+        dispatch(setNotificationList(notificationResponse));
+        dispatch(setNotificationCount(unreadCount));
+        console.log('notification', notificationResponse);
+
         navigation.navigate('FarmerNavigation');
       }
       setemail('');
@@ -57,7 +70,7 @@ const Login = () => {
     setLoading(false);
   };
   return (
-    <View>
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
       <Image source={require('../images/logo.png')} style={styles.logo} />
       <Text style={styles.logintxt}>Login</Text>
       <Custominput
@@ -107,33 +120,6 @@ const Login = () => {
         </TouchableOpacity>
       )}
 
-      {/* <TouchableOpacity
-        style={{
-          height: 50,
-          width: '85%',
-          backgroundColor: '#000',
-          alignSelf: 'center',
-          marginTop: 20,
-          borderRadius: 20,
-          alignItems: 'center',
-        }}
-        onPress={() => {
-          navigation.navigate('Home');
-        }}>
-        <Text style={{color: 'white', paddingTop: 13}}>Customer</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          height: 50,
-          width: '85%',
-          backgroundColor: '#000',
-          alignSelf: 'center',
-          marginTop: 20,
-          borderRadius: 20,
-          alignItems: 'center',
-        }}>
-        <Text style={{color: 'white', paddingTop: 13}}>Farmer</Text>
-      </TouchableOpacity> */}
       <Text
         style={{
           marginTop: 20,

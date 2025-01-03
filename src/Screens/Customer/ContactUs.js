@@ -1,46 +1,88 @@
+import React, {useState} from 'react';
 import {
   View,
   Text,
-  Image,
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
-import React from 'react';
+import {Linking} from 'react-native'; // Required for Linking.openURL
 
-const Contactus = () => {
+// Send Email Function
+export function sendEmail(fromEmail, message) {
+  const subject = 'Message from Farm Fresh User';
+  const body = `From: ${fromEmail}\n\n${message}`; // Including sender's email in the body
+  const url = `mailto:malikhaidera14@gmail.com?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}&from=${encodeURIComponent(fromEmail)}`;
+
+  Linking.openURL(url)
+    .then(result => {
+      if (result) {
+        console.log('Email app opened successfully');
+      } else {
+        console.log('Unable to open email app');
+      }
+    })
+    .catch(error => console.log('Error opening email app:', error));
+}
+
+const ContactUsScreen = () => {
+  const [userEmail, setUserEmail] = useState(''); // To store user email input
+  const [message, setMessage] = useState(''); // To store the message input
+
+  const handleSend = () => {
+    // Validation for email and message
+    if (!userEmail.trim()) {
+      Alert.alert('Email Required', 'Please enter your email address.');
+      return;
+    }
+
+    if (!message.trim()) {
+      Alert.alert('Message Required', 'Please enter a message before sending.');
+      return;
+    }
+
+    // Sending email using sendEmail function with user's email
+    sendEmail(userEmail, message); // Passing user's email as the "from" email
+    Alert.alert(
+      'Email Sent',
+      'Your message has been sent to the support team.',
+    );
+    setMessage(''); // Clear message input after sending
+  };
+
   return (
     <View style={styles.container}>
-      {/* Name Input */}
-      <View style={styles.inputContainer}>
-        <Image
-          source={require('../Customer/icons/person.png')}
-          style={styles.icon}
-        />
-        <TextInput placeholder="Name" style={styles.textInput} />
-      </View>
+      <Text style={styles.title}>Contact Us</Text>
+      <Text style={styles.description}>
+        Let us know how we can help you. Write your message below and send it to
+        our support team.
+      </Text>
 
-      {/* Email Input */}
-      <View style={styles.inputContainer}>
-        <Image
-          source={require('../Customer/icons/email.png')}
-          style={styles.icon}
-        />
-        <TextInput placeholder="Email" style={styles.textInput} />
-      </View>
+      {/* Email Input Field */}
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your email"
+        value={userEmail}
+        onChangeText={setUserEmail}
+        keyboardType="email-address"
+      />
 
-      {/* Message Input */}
-      <View style={styles.messageContainer}>
-        <TextInput
-          placeholder="Message"
-          style={styles.messageInput}
-          multiline={true}
-        />
-      </View>
+      {/* Message Input Field */}
+      <TextInput
+        style={[styles.input, {height: 150}]}
+        placeholder="Type your message here..."
+        value={message}
+        onChangeText={setMessage}
+        multiline
+        textAlignVertical="top"
+      />
 
-      {/* Submit Button */}
-      <TouchableOpacity style={styles.submitButton}>
-        <Text style={styles.submitText}>Submit</Text>
+      {/* Send Button */}
+      <TouchableOpacity style={styles.button} onPress={handleSend}>
+        <Text style={styles.buttonText}>Send Email</Text>
       </TouchableOpacity>
     </View>
   );
@@ -49,58 +91,44 @@ const Contactus = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: '#f9f9f9',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: '#555',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    fontSize: 16,
     backgroundColor: '#fff',
-    paddingTop: 20,
-    alignItems: 'center',
+    marginBottom: 15,
   },
-  inputContainer: {
-    height: 55,
-    width: '80%',
-    borderRadius: 10,
-    borderWidth: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+  button: {
     marginTop: 20,
-    paddingHorizontal: 10,
-  },
-  icon: {
-    height: 24,
-    width: 24,
-    marginRight: 10,
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 16,
-    paddingLeft: 10,
-  },
-  messageContainer: {
-    height: 200,
-    width: '80%',
-    borderRadius: 10,
-    borderWidth: 1,
-    marginTop: 20,
-    paddingHorizontal: 10,
-  },
-  messageInput: {
-    flex: 1,
-    fontSize: 16,
-    textAlignVertical: 'top',
-    paddingVertical: 10,
-  },
-  submitButton: {
-    height: 55,
-    width: '75%',
-    backgroundColor: '#000',
-    borderRadius: 10,
-    justifyContent: 'center',
+    backgroundColor: '#28a745',
+    paddingVertical: 15,
+    borderRadius: 8,
     alignItems: 'center',
-    marginTop: 30,
   },
-  submitText: {
-    fontSize: 20,
-    fontWeight: '500',
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#fff',
   },
 });
 
-export default Contactus;
+export default ContactUsScreen;

@@ -24,7 +24,7 @@ const Changepassword = () => {
     }
 
     if (newpassword.trim() !== connewpassword.trim()) {
-      errorMessage('Error', 'New passwords do not match.'); // Use custom errorMessage function
+      errorMessage('Error', 'New passwords do not match.');
       return false;
     }
 

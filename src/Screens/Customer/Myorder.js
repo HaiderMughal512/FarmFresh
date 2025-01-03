@@ -5,6 +5,7 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {getMyOrders} from '../../api/orders';
@@ -17,6 +18,7 @@ const Myorder = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null); // For error handling
   const user = useSelector(state => state.userReducer?.user);
+  const [loading, setLoading] = useState(true);
 
   const getOrder = async () => {
     try {
@@ -27,6 +29,7 @@ const Myorder = () => {
       console.error('Failed to fetch orders', error);
       setError('Unable to fetch your orders. Please try again.');
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const Myorder = () => {
         <Text style={styles.productId}>Order ID: {O_id}</Text>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Amount:</Text>
-          <Text style={styles.value}>${O_amount}</Text>
+          <Text style={styles.value}>RS.{O_amount}</Text>
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Date:</Text>
@@ -84,9 +87,19 @@ const Myorder = () => {
     );
   };
 
-  return (
+  return loading ? (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      <ActivityIndicator size={'large'} color={'red'} />
+    </View>
+  ) : (
     <View style={styles.container}>
       {error && <Text style={styles.errorText}>{error}</Text>}
+      <Text style={styles.header}>My Orders</Text>
 
       <FlatList
         data={orders}
@@ -104,12 +117,12 @@ const Myorder = () => {
       />
 
       {/* This button is for debugging and testing */}
-      <Button
+      {/* <Button
         title="Check"
         onPress={() => {
           console.log('My Orders:', orders);
         }}
-      />
+      /> */}
     </View>
   );
 };
@@ -127,13 +140,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+    textAlign: 'center',
+  },
   itemContainer: {
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 8,
     marginBottom: 15,
-    elevation: 3, // Adds shadow for Android
-    shadowColor: '#000', // Adds shadow for iOS
+    elevation: 3,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,

@@ -15,6 +15,8 @@ import OrderDetails from '../Screens/Farmer/orderDetails';
 import Feedback from '../Screens/Feedback';
 import Details from '../Screens/details';
 import ForgetPassword from '../Screens/ForgetPassword';
+import Myorder from '../Screens/Customer/Myorder';
+import Notifiaction from '../Screens/Farmer/Notifiaction';
 // import MainProduct from '../Screens/Farmer/products/MainProduct';
 // import DeleteProduct from '../Screens/Farmer/products/DeleteProduct';
 // import UpdateProduct from '../Screens/Farmer/products/UpdateProduct';
@@ -36,8 +38,18 @@ const Appnavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Myorder"
+          component={Myorder}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="Description"
           component={Description}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Notifiaction"
+          component={Notifiaction}
           options={{headerShown: false}}
         />
         <Stack.Screen

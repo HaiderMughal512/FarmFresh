@@ -55,13 +55,11 @@ const ForgetPassword = () => {
 
     if (result) {
       if (result?.U_email === email.trim() && result?.U_name === name.trim()) {
-        // If both email and name match case-sensitively, show the password
         Alert.alert(
           'Password Found',
           `Your password is: ${result?.U_password}`,
         );
       } else {
-        // If either the email or name does not match
         Alert.alert('Error', 'User not found');
       }
     } else {

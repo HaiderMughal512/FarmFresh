@@ -11,18 +11,23 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {
   getFarmerOrders,
   getMyOrders,
+  updateFarmerNotificationStatus,
   updateOrderStatus,
 } from '../../api/orders';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {UpdateNotificationList} from '../../Redux/notification/notificationAction';
 
 const Orders = () => {
   const user = useSelector(state => state.userReducer?.user);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [order, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
   const [check, setCheck] = useState(0);
   const getOrder = async () => {
     try {
+      console.log('User Id', user?.U_id);
+
       let res = await getFarmerOrders(user?.U_id);
       console.log('Order Response with Users', res);
 
@@ -42,9 +47,17 @@ const Orders = () => {
 
   const handleUpdateStatus = async (id, status) => {
     console.log('Id', id, 'Status', status);
-    let res = await updateOrderStatus(id, status);
-    console.log('Status Update Response', res);
-    if (res === 'Order Updated Successfully') {
+    // let res = await updateOrderStatus(id, status);
+    let notRes = await updateFarmerNotificationStatus(id);
+
+    console.log('Status Update Response', notRes);
+    if (
+      notRes === 'Update Successfully' ||
+      notRes === 'Notification Not exist'
+    ) {
+      dispatch(UpdateNotificationList(id));
+      // console.log('Notification Update', notRes);
+
       setCheck(check + 1);
     }
   };
@@ -60,7 +73,7 @@ const Orders = () => {
     u_id,
   }) => {
     const specificUser = users.find(user => user?.U_id === u_id);
-    console.log('Specific User', specificUser);
+    // console.log('Specific User', specificUser);
 
     return (
       <TouchableOpacity

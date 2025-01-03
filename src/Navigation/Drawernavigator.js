@@ -31,7 +31,7 @@ const Drawernavigator = () => {
         component={MyAccounts}
         options={{headerTitle: 'Personal Information'}}
       />
-      <Drawer.Screen name="My Order" component={Myorder} />
+      {/* <Drawer.Screen name="My Order" component={Myorder} /> */}
       <Drawer.Screen name="Contact Us" component={ContactUs} />
       <Drawer.Screen name="Privacy Policy" component={PrivacyPolicy} />
       <Drawer.Screen name="Terms & Conditions" component={TermCondition} />

@@ -7,6 +7,8 @@ import Home from '../Screens/Customer/Home';
 import {Image, TouchableOpacity} from 'react-native';
 import {Text} from 'react-native-reanimated/lib/typescript/Animated';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Myorder from '../Screens/Customer/Myorder';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Tab = createBottomTabNavigator();
 
@@ -60,7 +62,7 @@ const TabNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Notification"
         component={Notification}
         options={{
@@ -71,6 +73,16 @@ const TabNavigator = () => {
               size={size}
               color={color}
             />
+          ),
+        }}
+      /> */}
+      <Tab.Screen
+        name="Myorder"
+        component={Myorder}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused, size, color}) => (
+            <Feather name="shopping-bag" size={size} color={color} />
           ),
         }}
       />
