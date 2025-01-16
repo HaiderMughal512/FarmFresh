@@ -1,17 +1,32 @@
-import { View, Text, SafeAreaView, TouchableOpacity } from 'react-native'
-import React from 'react'
-import Appnavigator from './src/Navigation/Appnavigator'
+import {View, Text, SafeAreaView, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import Appnavigator from './src/Routes/Appnavigator';
 
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { Provider } from 'react-redux';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Provider} from 'react-redux';
 import store from './src/Redux/Store';
+// import {getMessaging} from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 
 const App = () => {
-  return (
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
+  return (
+    <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
-      <Appnavigator />
+        <Appnavigator />
       </Provider>
     </GestureHandlerRootView>
   );
