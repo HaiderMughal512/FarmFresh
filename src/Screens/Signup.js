@@ -26,12 +26,49 @@ const Signup = () => {
   const navigation = useNavigation();
 
   const handleSignUp = async () => {
-    if (!email || !password || !name || !phone || !address || !confirmpass) {
+    if (
+      !email.trim() ||
+      !password.trim() ||
+      !name.trim() ||
+      !phone.trim() ||
+      !address.trim() ||
+      !confirmpass.trim()
+    ) {
       errorMessage('Signup Error', 'Please fill all the fields');
       return;
     }
-
-    if (password !== confirmpass) {
+    if (name.trim().length < 3) {
+      errorMessage('Signup Error', 'Name must be at least 3 characters long');
+      return;
+    }
+    if (!email.trim().includes('@') || !email.trim().endsWith('@gmail.com')) {
+      errorMessage('Signup Error', 'Please enter a valid Gmail address');
+      return;
+    }
+    if (phone.trim().length < 10 || isNaN(phone)) {
+      errorMessage(
+        'Signup Error',
+        'Phone number must be at least 10 digits and contain only numbers',
+      );
+      return;
+    }
+    if (address.trim().length < 5) {
+      errorMessage(
+        'Signup Error',
+        'Address must be at least 5 characters long',
+      );
+      return;
+    }
+    const hasLetters = /[a-zA-Z]/.test(password);
+    const hasNumbers = /[0-9]/.test(password); // Check for at least one number
+    if (password.trim().length < 8 || !hasLetters || !hasNumbers) {
+      errorMessage(
+        'Signup Error',
+        'Password must be at least 8 characters long and include both letters and numbers',
+      );
+      return;
+    }
+    if (password.trim() !== confirmpass.trim()) {
       errorMessage('Signup Error', 'Passwords do not match');
       return;
     }
@@ -40,6 +77,7 @@ const Signup = () => {
     try {
       let res = await SignUp(email, password, phone, name, address);
       console.log('Sign Up Response:', res);
+      console.log('phone response', phone);
 
       if (res === 'User registered successfully') {
         successMessage('Authentication', 'User Registered Successfully');

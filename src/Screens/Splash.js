@@ -1,6 +1,7 @@
 import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient'; // Added LinearGradient import
 
 const {width, height} = Dimensions.get('window');
 const Splash = () => {
@@ -15,7 +16,10 @@ const Splash = () => {
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    // Updated the gradient colors for a fresher feel
+    <LinearGradient
+      colors={['#FFFB7D', '#00D4FF']} // Light yellow to soft blue gradient
+      style={styles.container}>
       <View>
         <Image source={require('../images/logo.png')} style={styles.logo} />
       </View>
@@ -23,7 +27,7 @@ const Splash = () => {
         <Text style={styles.text}>What would you like today?</Text>
         <Text style={styles.subText}>Fruits & Vegetables!</Text>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -32,7 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
   },
   logo: {
     height: height * 0.15,
@@ -48,12 +51,12 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#4CAF50',
+    color: '#2C3E50', // Changed to dark grey for contrast
     alignSelf: 'center',
   },
   subText: {
     fontSize: 16,
-    color: '#757575',
+    color: '#34495E', // Updated to a slightly darker grey
     alignSelf: 'center',
   },
 });

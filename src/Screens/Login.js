@@ -37,6 +37,10 @@ const Login = () => {
       errorMessage('Login Error', 'please fill all the feilds');
       return;
     }
+    if (!email.trim().includes('@') || !email.trim().endsWith('@gmail.com')) {
+      errorMessage('Login Error', 'Please enter a valid Gmail address.');
+      return;
+    }
     setLoading(true);
     console.log(email, password);
     const res = await login(email, password, 'Farmer');

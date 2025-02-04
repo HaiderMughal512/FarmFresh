@@ -417,6 +417,8 @@ export default function Details() {
   const handleEdit = async () => {
     let res = await editFeedback(editingFeedbackId, editFeedbackText);
     if (res?.success) {
+      console.log('edit feddback response', res);
+
       const updatedFeedbacks = feedBacks.map(feedback =>
         feedback.Feed_id === editingFeedbackId
           ? {...feedback, FeedBack1: editFeedbackText}

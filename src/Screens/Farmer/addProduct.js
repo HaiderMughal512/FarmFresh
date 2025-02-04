@@ -17,6 +17,7 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import {imageIp} from '../../env';
+import {errorMessage, successMessage} from '../../utils/Methods';
 // import {errorMessage} from '../../utils/Methods';
 
 export default function AddProduct() {
@@ -66,6 +67,18 @@ export default function AddProduct() {
   // }
 
   const handleAddProduct = async () => {
+    if (
+      !productname ||
+      !description ||
+      !price ||
+      !quantity ||
+      !image ||
+      !category
+    ) {
+      errorMessage('Warning', 'please fill the the fields');
+      // console.log('Please fill out all fields.');
+      return; // Stops the function if any field is empty
+    }
     try {
       let formData = new FormData();
       formData.append('f_id', user?.U_id);
@@ -194,7 +207,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8f9fa',
     padding: 20,
-    bottom: 20,
   },
   header: {
     fontSize: 24,

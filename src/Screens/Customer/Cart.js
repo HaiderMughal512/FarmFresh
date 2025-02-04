@@ -166,6 +166,13 @@ const Cart = () => {
   useEffect(() => {
     console.log('cart', products);
   }, []);
+  if (!products?.productlist || products?.productlist.length === 0) {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.noItemText}>Your cart is empty</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -204,6 +211,15 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 20,
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noItemText: {
+    fontSize: 18,
+    color: '#888',
   },
   itemContainer: {
     flexDirection: 'row',
